@@ -8,8 +8,7 @@ class FloatValue:
     def __set__(self, instance, value):
         if type(value) is not float:
             raise TypeError("Присваивать можно только вещественный тип данных.")
-        setattr(instance, self.name, value)
-    
+        setattr(instance, self.name, value)    
     
 
 class Cell:
