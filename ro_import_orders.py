@@ -62,11 +62,13 @@ class RemOnline():
 
 class GetResurs:
     '''класс для итерации по Гет запросам, пагинация по 50 єлементов'''
+    
     def __init__(self, ro:RemOnline, resurs:str, filterstr:str=''):
         self.ro = ro
         self.resurs = resurs
         self.res = None
         self.filterstr = filterstr
+        self.page_len = 50
 
     def __iter__(self):
         self.limit = 1
@@ -91,7 +93,7 @@ class GetResurs:
                 response = requests.request("GET", url, data=payload, headers=headers, files=files)
                 response.raise_for_status()
                 data = json.loads(response.text)
-                self.limit = math.ceil(int(data["count"])/50)
+                self.limit = math.ceil(int(data["count"])/self.page_len)
                 self.res = DictObj(response.json()) #- так можно вернуть страницу как объект
             except Exception as error:
                 print(error)
