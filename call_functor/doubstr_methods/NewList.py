@@ -1,4 +1,5 @@
 class NewList:
+    '''Class added to create a substraction to lists'''
     def __init__(self, in_list = []):
         if isinstance(in_list, list):
             self.in_list = self.li_typle(in_list)
