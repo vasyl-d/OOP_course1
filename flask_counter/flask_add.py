@@ -24,16 +24,25 @@ def index(app):
         else:
             session['counter'] = num
         return Response(svg_pixel, mimetype='image/svg+xml;charset=UTF-8')
-    else:
+    elif app == 'res':
         if 'counter' in session:
             text_output = str(session['counter'])
       
             session.pop('counter')
-            l = len(text_output)*18
+            l = len(text_output)*10
             svg = svg_str.format(text_output, str(l))
             return Response(svg, mimetype='image/svg+xml;charset=UTF-8')
     return Response(svg_pixel, mimetype='image/svg+xml;charset=UTF-8')
 
+@app.route('/')
+def welcome():
+    text_output = '''Welcome!
+    use svg counter to add value: /add?str=number_value_to_add + 
+        \n
+    use svg counter toshow result /res'''
+    l = len(text_output) * 10
+    svg = svg_str.format(text_output, str(l))
+    return Response(svg, mimetype='image/svg+xml;charset=UTF-8')
 
 if __name__ == '__main__':
     app.debug = False
