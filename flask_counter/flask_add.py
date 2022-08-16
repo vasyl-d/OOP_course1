@@ -1,11 +1,10 @@
 '''published on repl:
 https://Counter.dmitriievvasili.repl.co
 '''
-from flask import Flask, session, request, Response
+from flask import Flask, request, Response
 from re import findall
 import logging
 
-from numpy import number
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
