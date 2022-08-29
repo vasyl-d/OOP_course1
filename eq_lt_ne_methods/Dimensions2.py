@@ -1,5 +1,3 @@
-from tabnanny import check
-
 
 NUM = {int, float}
 class Dimensions:

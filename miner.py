@@ -24,7 +24,7 @@ class Cell:
 class GamePole:
     def __init__(self, N, M):
         self.rows = N
-        self.cols = N
+        self.cols = M
         self.pole = []
  
         #создаем набор координат мин
@@ -35,7 +35,7 @@ class GamePole:
             self.minerows.add((x,y))
 
         #создаем двумерный список - поле и расставляем мины
-        self.pole = [[Cell(r, c, mine=True) if (r,c) in self.minerows else Cell(r, c, mine=False, around_mines=self._count_mines(r,c)) for c in range(N) ] for r in range(N)]
+        self.pole = [[Cell(r, c, mine=True) if (r,c) in self.minerows else Cell(r, c, mine=False, around_mines=self._count_mines(r,c)) for c in range(self.cols) ] for r in range(self.rows)]
 
         #надо просчитать сколько мин вокруг для свободных ячеек
     def _count_mines(self, x, y):
