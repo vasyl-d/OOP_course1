@@ -29,6 +29,14 @@ class Thing:
     def __init__(self, name, weight) -> None:
         self.name = name
         self.weight = weight
+    
+    def __add__(self, other):
+        if isinstance(other, self.__class__):
+            return self.weight + other.weight
+        elif isinstance(other, {int, float}):
+            return self.weight + other
+        else:
+            raise TypeError("Weight must be int or float")
 
 class Bag:
     max_weight = WeightValue()
@@ -47,7 +55,7 @@ class Bag:
 
     def add_thing(self, thing:Thing): 
         # - добавление нового предмета в рюкзак (добавление возможно, если суммарный вес (max_weight) не будет превышен, иначе добавление не происходит);
-        if self.get_total_weight()+thing.weight <= self.max_weight:
+        if len(self) + thing.weight <= self.max_weight:
             self.things += [thing]
 
     def remove_thing(self, indx):
@@ -55,13 +63,18 @@ class Bag:
         if indx < len(self.things):
             self.things.pop(indx)
 
-    def get_total_weight(self):
+    def __len__(self):
         # - возвращает суммарный вес предметов в рюкзаке.
-        w = 0
-        for t in self.things:
-            w += t.weight
-        return w
+        return sum(self.things)
 
+    def __getitem__(self, key):
+        pass
+
+    def __setitem__(self, key, value):
+        pass
+
+    def __delitem__(self, key):
+        pass
 
 bag = Bag(1000)
 bag.add_thing(Thing("Книга по Python", 100))
