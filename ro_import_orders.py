@@ -1,11 +1,11 @@
 import time
-import json
 import requests
 import math
 
 
 API_KEY = "237a1231fe9b4a13b66e5389598b9d85"
 RO_PATH = "https://api.remonline.app"
+PAGE_LEN = 50 #api page length 
 
 class DictObj:
     '''класс для преобразования json в обьект'''
@@ -52,7 +52,7 @@ class RemOnline():
         try:
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
             response.raise_for_status()
-            data = json.loads(response.text)
+            data = response.json()
             token = data["token"]
         except Exception as error:
             print(error)
@@ -68,7 +68,6 @@ class GetResurs:
         self.resurs = resurs
         self.res = None
         self.filterstr = filterstr
-        self.page_len = 50
 
     def __iter__(self):
         self.limit = 1
@@ -89,12 +88,10 @@ class GetResurs:
             if self.page >1 :
                 url += '&page='+str(self.page)
             try:
-                print(url)
                 response = requests.request("GET", url, data=payload, headers=headers, files=files)
                 response.raise_for_status()
-                data = json.loads(response.text)
-                self.limit = math.ceil(int(data["count"])/self.page_len)
                 self.res = DictObj(response.json()) #- так можно вернуть страницу как объект
+                self.limit = math.ceil(int(self.res.count/PAGE_LEN))                
             except Exception as error:
                 print(error)
             self.page += 1
@@ -102,30 +99,20 @@ class GetResurs:
         else:
             raise StopIteration                    
 
-class Warehouse():
-    id = None # integer
-    is_global = None #bool - Чи є склад глобальным?
-    title = None # string - Назва склад
-    branch_id = None #Branch
-
-class Branch():
-    id = None
-    title = None
-
 ro = RemOnline()
 print(ro.token, ro.token_lifetime)
 
 re = GetResurs(ro, '/lead/') #запрос списка лидов
 myiter = iter(re)
 '''каждая страница - объект. его свойство data содержит массив объектов с содержимым строки.'''
-for i in myiter:
-    for j in i.data:
+for page in myiter:
+    for j in page.data:
         print(j.contact_name)
             
 wh = GetResurs(ro, '/warehouse/goods/67724') #получим список товаров
 myiter = iter(wh)
-for i in myiter:
-    for j in i.data:
+for page in myiter:
+    for j in page.data:
         print(j.title)
 
 wh = GetResurs(ro, '/warehouse/') #получим список складов
@@ -142,7 +129,7 @@ for client in page.data:
     print(client.name, client.id)
 
 
-tm = time.struct_time((2022,7,18,0,0,0,0,0,0))
+tm = (2022,7,18,0,0,0,0,0,0)
 tday1 = round(time.mktime(tm))*1000
 tday2 = round(time.time())*1000
 
@@ -150,7 +137,6 @@ flt = "created_at[]="+str(tday1)+"&created_at[]="+str(tday2)
 print(flt)
 ord = GetResurs(ro, '/order/', flt)
 myiter = iter(ord)
-#возьмем только 1 cраницу
-page = next(myiter)
-for order in page.data:
-    print(order.id, order.id_label, order.client.name, order.status.name, order.created_at)
+for page in myiter:
+    for order in page.data:
+        print(order.id, order.id_label, order.client.name, order.status.name, order.created_at)
