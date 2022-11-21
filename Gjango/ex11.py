@@ -9,3 +9,6 @@ while True:
         break
 # print(f"k: {k}, nums: {nums}")
 print(any(nums[el] == nums[el+k+1] for el in range(len(nums)-k)))
+
+
+filter(nums)
