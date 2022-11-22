@@ -2,6 +2,7 @@
 <!--bootstrap including in document-->
 
 <html lang="en">
+    <script src="./js/includeHTML.js"></script>
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,36 +14,8 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <a href="#" class="navbar-brand">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" width="30" height="30" alt="logo">
-        </a>
-        <a href="#" class="navbar-brand">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Nuxt_logo.svg" width="30" height="30" alt="logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a href="#" class="nav-link">Главная</a>
-                </li>
-                <li class="nav-item ">
-                    <a href="#" class="nav-link">Контакты</a>
-                </li>
-            </ul>
-            <form action="" class="form-inline my-2 my-lg-0">
-                <input type="text" class="form-control mr-sm-2" placeholder="Поиск" aria-label="Поиск">
-                <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Поиск</button>
-            </form>
-            <a href="#" class="btn btn-outline-light mr-2">Вход</a>
-            <a href="#" class="btn btn-outline-light mr-2">Регистрация</a>
-            <a href="#" class="btn btn-outline-light">Выход</a>
-        </div>
-    </nav>
+    <!-- including nav bar -->
+    <div w3-include-html="nav.html"></div>
     <!-- Slider with images -->
     <div class="container-fluid home-slider">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" > 
@@ -94,7 +67,7 @@
                     <img src="img/bg_img.png" alt="" class="card-img-top">
                     <div class="card-body">
                         <h4 class="card-title">Заголовок</h4>
-                        <p class="card-text">Это красткое описание поста. Это красткое описание поста. Это красткое описание поста. </p>
+                        <p class="card-text">Это краткое описание поста. </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href="#" class="btn btn-sm btn-outline-secondary">Подробнее</a>
@@ -196,17 +169,13 @@
             </li>
         </ul>
     </nav>
-    <!-- footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="float-right btn btn-sm btn-outline-secondary">
-                <a href="#">Наверх</a>
-            </div>
-            <span class="text-muted">Vasyl-D python, js, bootstrap, drf и nuxtJS. А это просто тестовый блог.</span>
-        </div>
-    </footer>
+        <!-- including footer -->
+        <div w3-include-html="footer.html"></div>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-  </body>
+    <script>
+        includeHTML();
+    </script>
+</body>
 </html>
