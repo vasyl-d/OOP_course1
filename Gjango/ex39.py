@@ -13,19 +13,30 @@ import sys
 
 def check_split3(arr):
     s = sum(arr)
-    if s % 3 != 0: return False
-    res = [0,0,0]
+    if s % 3 != 0: 
+        print('not %3')
+        return False
+    res = []
     part = s / 3
-    i = 0
+    start = 0
+    end = 1
     j = 0
     l = len(arr)
-    while j < l:
-        if i > 3: return False
-        while res[i] < part and j < l:
-            res[i] += arr[j]
-            j += 1
-        i += 1
-    return(all(map(lambda x: x==part, res)))
+
+    while end <= l: 
+        if j < 2:
+            s = arr[start:end]
+            if sum(s) == part:
+                res.append(s)
+                start = end 
+                j += 1
+            end = end + 1
+        else:
+            break
+    if arr[start:]:    
+        res.append(arr[start:])
+    print(res)
+    return(all(map(lambda x: sum(x)==part, res)) and len(res) == 3)
 
 def test_():
     test = [
@@ -41,7 +52,11 @@ def test_():
         ([3,3,3], True),
         ([-12,0,24], False),
         ([-12,0,12], False),
+        ([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], True),
+
     ]
+    for x in test:
+        assert check_split3(x[0])==x[1], f"Error in Test {x}"
     return('OK')
 
 
